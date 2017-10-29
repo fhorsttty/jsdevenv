@@ -8,7 +8,7 @@ export default class MyComponent extends React.Component<Props, object> {
   render() {
     return (
       <div>
-        <h1>{this.props.content}</h1>
+        <p>{this.props.content}</p>
       </div>
     );
   }
