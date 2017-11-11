@@ -1,6 +1,6 @@
 // webpack3
 
-const path = require('path');
+var path = require('path');
 
 module.exports = {
   // エントリーポイントがあるディレクトリの絶対パス
