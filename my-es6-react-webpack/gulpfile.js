@@ -8,7 +8,7 @@ var csso = require('gulp-csso');
 var rename = require('gulp-rename');
 var webpack = require('webpack');
 var webpackStream = require('webpack-stream');
-var webpackConfig = require('./webpack.config.js');
+var webpackConfig = require('./webpack.config.dev.js');
 
 var paths = {
   'srcStyles': ['src/assets/styles/style.styl'],
