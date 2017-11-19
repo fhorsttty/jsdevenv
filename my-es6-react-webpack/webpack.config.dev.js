@@ -32,13 +32,23 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: [
-                'env',
+                ['env', {
+                  loose: true,
+                }],
+                'stage-2',
                 'react',
               ],
             },
           },
         ],
       },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+        ],
+      }
     ],
   },
   // プラグインの設定
