@@ -36,6 +36,20 @@
         "semi": [
             "error",
             "always"
+        ],
+        "arrow-body-style": [
+          "error",
+          "as-needed"
+        ],
+        "no-multi-spaces": [
+          "error", {
+            "ignoreEOLComments": true,
+            "exceptions": {
+              "Property": true,
+              "VariableDeclarator": true,
+              "ImportDeclaration": true
+            }
+          }
         ]
     }
 }
