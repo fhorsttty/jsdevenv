@@ -50,14 +50,14 @@ module.exports = {
         test: /\.css$/,
         use: [
           { loader: 'style-loader' },
-          { loader: 'css-loader?modules' },
+          { loader: 'css-loader?modules' }, // CSS Modules
         ],
       },
       {
         test: /\.styl$/,
         use: [
           { loader: 'style-loader' },
-          { loader: 'css-loader?modules' },
+          { loader: 'css-loader?modules' }, // CSS Modules
           { loader: 'stylus-loader' },
         ],
       },
