@@ -7,7 +7,7 @@ module.exports = {
   context: path.join(__dirname, 'src/assets/js'),
   // モジュールの依存関係を解析するエントリーポイント
   entry: {
-    javascript: './Index.jsx',
+    javascript: './index.js',
   },
   output: {
     // バンドル・ファイルの出力先の絶対パス

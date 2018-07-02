@@ -46,7 +46,6 @@
           "prefer-single"
         ],
         "function-paren-newline": [
-          "error", 
           "off"
         ],
         "no-underscore-dangle": [
