@@ -48,7 +48,13 @@ module.exports = {
           { loader: 'style-loader' },
           { loader: 'css-loader?modules' }, // CSS Modules
         ],
-      }
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|svg)$/,
+        use: [
+          { loader: 'file-loader?name=fonts/[name].[ext]' },
+        ],
+      },
     ],
   },
   // プラグインの設定
@@ -60,5 +66,12 @@ module.exports = {
     // webpack-dev-serverで公開するディレクトリ
     contentBase: path.resolve(__dirname, 'dist'),
     port: 3000,
+    /*
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+      },
+    },
+    */
   },
 };
