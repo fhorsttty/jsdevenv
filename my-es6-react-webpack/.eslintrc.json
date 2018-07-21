@@ -7,6 +7,10 @@
     },
     "extends": [
       "eslint:recommended",
+      "plugin:jsx-a11y/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings",
+      "plugin:flowtype/recommended",
       "plugin:react/recommended",
       "airbnb"
     ],
@@ -18,7 +22,10 @@
       "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "jsx-a11y",
+        "import",
+        "flowtype"
     ],
     "rules": {
         "indent": [
