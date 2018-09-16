@@ -30,7 +30,9 @@
     "rules": {
         "indent": [
           "error",
-          2
+          2, {
+            "SwitchCase": 1
+          }
         ],
         "linebreak-style": [
           "error",
@@ -74,6 +76,12 @@
         "react/jsx-filename-extension": [
           1, {
             "extensions": [".js", ".jsx"]
+          }
+        ],
+        "jsx-a11y/anchor-is-valid": [
+          "error", {
+            "components": [ "Link" ],
+            "specialLink": [ "to" ]
           }
         ]
     }
