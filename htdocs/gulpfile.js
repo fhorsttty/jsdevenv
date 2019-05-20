@@ -16,13 +16,17 @@ const postcss = require('gulp-postcss');
 const assets = require('postcss-assets');
 const flexBugFixes = require('postcss-flexbugs-fixes');
 const cssdeclsort = require('css-declaration-sorter');
-const mqpacker = require('css-mqpacker');
+// const mqpacker = require('css-mqpacker');
+
+// js
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
 
 // images
 const imagemin = require('gulp-imagemin');
 const mozjpeg = require('imagemin-mozjpeg');
 const pngquant = require('imagemin-pngquant');
-
 
 const paths = {
   root: './src',
@@ -35,6 +39,11 @@ const paths = {
     src: './src/styles/style.scss',
     dest: './dist/styles',
     map: './dist/styles/maps',
+  },
+  scripts: {
+    src: './src/js/**/*.js',
+    dest: './dist/js',
+    map: './dist/js/maps',
   },
   images: {
     src: './src/images/**/*.{jpg,jpeg,png,svg,gif}',
@@ -66,7 +75,7 @@ gulp.task('styles', () => {
       loadPaths: ['images'],    // 画像のパスを解決する。
       cachebuster: true,
     }),
-    mqpacker(),                 // メディアクエリを集約する。
+    // mqpacker(),                 // メディアクエリを集約する。
     cssdeclsort({               // cssの順番を整列する。
       order: 'smacss',
     }),
@@ -91,6 +100,20 @@ gulp.task('styles', () => {
     .pipe(postcss(postcssOption))
     .pipe(gulp.dest(paths.styles.dest, { sourcemaps: './maps' }));
 });
+
+// JSコンパイル
+gulp.task('scripts', () => gulp
+  .src(paths.scripts.src, { sourcemaps: true })
+  .pipe(plumber({
+    errorHandler: notify.onError(errorMessage),
+  }))
+  .pipe(concat('bundle.js'))
+  .pipe(uglify())
+  .pipe(rename({
+    suffix: '.min',
+  }))
+  .pipe(gulp.dest(paths.scripts.dest, { sourcemaps: './maps' })),
+);
 
 // 画像最適化
 gulp.task('images', () => {
@@ -139,7 +162,7 @@ gulp.task('watch', () => {
   };
 
   gulp.watch(paths.styles.src).on('change', gulp.series('styles', browserReload));
-  // gulp.watch(paths.scripts.src).on('change', gulp.series(scripts, esLint, browserReload));
+  gulp.watch(paths.scripts.src).on('change', gulp.series('scripts', browserReload));
   gulp.watch(paths.html.src).on('change', gulp.series('html', 'images', browserReload));
 });
 
