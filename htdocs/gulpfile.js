@@ -7,6 +7,7 @@ const del = require('del');
 
 // html
 const prettify = require('gulp-prettify');
+const ejs = require('gulp-ejs');
 
 // styles(sass, postcss)
 const sass = require('gulp-sass');
@@ -16,7 +17,6 @@ const postcss = require('gulp-postcss');
 const assets = require('postcss-assets');
 const flexBugFixes = require('postcss-flexbugs-fixes');
 const cssdeclsort = require('css-declaration-sorter');
-// const mqpacker = require('css-mqpacker');
 
 // js
 const concat = require('gulp-concat');
@@ -34,8 +34,14 @@ const paths = {
     src: './src/html/**/*.html',
     dest: './dist/',
   },
+  ejs: {
+    src: [
+      './src/ejs/**/*.ejs',
+      '!' + './src/ejs/**/_*.ejs',
+    ],
+    dest: './dist/',
+  },
   styles: {
-    // src: './src/styles/**/*.scss',
     src: './src/styles/style.scss',
     dest: './dist/styles',
     map: './dist/styles/maps',
@@ -49,21 +55,39 @@ const paths = {
     src: './src/images/**/*.{jpg,jpeg,png,svg,gif}',
     dest: './dist/images',
   },
+  vendor: {
+    src: [
+      './src/vendor/**/*.js',
+      './src/vendor/**/*.css',
+    ],
+    dest: './dist/vendor',
+  }
 };
 const errorMessage = 'Error: <%= error.message %>';
 
+const prettifyOption = {
+  indent_char: ' ',
+  indene_size: 2,
+  unformatted: ['a', 'span', 'br'],
+};
+
 // html整形
 gulp.task('html', () => {
-  const prettifyOption = {
-    indent_char: ' ',
-    indene_size: 2,
-    unformatted: ['a', 'span', 'br'],
-  };
-
   return gulp
     .src(paths.html.src, { since: gulp.lastRun('html') })
     .pipe(prettify(prettifyOption))
     .pipe(gulp.dest(paths.html.dest));
+});
+
+gulp.task('ejs', () => {
+  return gulp
+    .src(paths.ejs.src)
+    .pipe(ejs())
+    .pipe(rename({
+      extname: ".html",
+    }))
+    .pipe(prettify(prettifyOption))
+    .pipe(gulp.dest(paths.ejs.dest));
 });
 
 // sassのコンパイル
@@ -101,7 +125,7 @@ gulp.task('styles', () => {
     .pipe(gulp.dest(paths.styles.dest, { sourcemaps: './maps' }));
 });
 
-// JSコンパイル
+// jsコンパイル
 gulp.task('scripts', () => gulp
   .src(paths.scripts.src, { sourcemaps: true })
   .pipe(plumber({
@@ -140,7 +164,6 @@ gulp.task('images', () => {
     .pipe(gulp.dest(paths.images.dest));
 });
 
-
 gulp.task('serve', (done) => {
   const browserSyncOption = {
     port: 3000,
@@ -163,8 +186,10 @@ gulp.task('watch', () => {
 
   gulp.watch(paths.styles.src).on('change', gulp.series('styles', browserReload));
   gulp.watch(paths.scripts.src).on('change', gulp.series('scripts', browserReload));
-  gulp.watch(paths.html.src).on('change', gulp.series('html', 'images', browserReload));
+  gulp.watch(paths.ejs.src).on('change', gulp.series('ejs', browserReload));
+  gulp.watch(paths.html.src).on('change', gulp.series('html', browserReload));
 });
 
+gulp.task('vendor', () => gulp.src(paths.vendor.src).pipe(gulp.dest(paths.vendor.dest)));
 gulp.task('clean', () => del([paths.styles.map, paths.scripts.map]));
 gulp.task('default', gulp.series('serve', 'watch'));
