@@ -65,13 +65,13 @@ const paths = {
 };
 const errorMessage = 'Error: <%= error.message %>';
 
+// html整形
 const prettifyOption = {
   indent_char: ' ',
   indene_size: 2,
   unformatted: ['a', 'span', 'br'],
 };
 
-// html整形
 gulp.task('html', () => {
   return gulp
     .src(paths.html.src, { since: gulp.lastRun('html') })
