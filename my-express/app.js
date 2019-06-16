@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const debug = require('debug')('app');
+const morgran = require('morgran');
+const config = require('./config');
 
 const app = express();
 
@@ -21,7 +23,7 @@ const indexRouter = require('./routes/index');
 
 app.use('/', indexRouter);
 
-const port = process.env.PORT || 3000;
+const port = config.app.port || 3000;
 app.listen(port);
 
 debug(`listen on port: '${port}'`);
