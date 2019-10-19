@@ -11,10 +11,13 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "debug": "^4.1.1",
+    "ejs": "^2.7.1",
     "express": "^4.16.4",
+    "http-errors": "^1.7.3",
     "morgan": "^1.9.1"
   },
   "devDependencies": {
+    "ejs-lint": "^0.3.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
