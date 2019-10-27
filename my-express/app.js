@@ -46,5 +46,6 @@ app.use((err, req, res, next) => {
 
 const port = config.app.port || 3000;
 app.listen(port);
-
 debug(`listen on port: '${port}'`);
+
+module.exports = app;
